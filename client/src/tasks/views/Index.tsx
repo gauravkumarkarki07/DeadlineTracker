@@ -1,7 +1,10 @@
 export default function Index() {
   return (
     <section>
-        This is task page
+      <article className="flex flex-col">
+        <h1>Tasks</h1>
+        <span>Add the tasks that you want to keep track of</span>
+      </article>
     </section>
   )
 }
