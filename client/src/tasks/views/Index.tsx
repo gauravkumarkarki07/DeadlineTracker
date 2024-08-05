@@ -1,10 +1,12 @@
+import TaskPopUp from "../components/TaskPopUp";
+
 export default function Index() {
   return (
-    <section>
-      <article className="flex flex-col">
-        <h1>Tasks</h1>
-        <span>Add the tasks that you want to keep track of</span>
-      </article>
+   <section className="flex flex-col border px-2 py-2 rounded-md">
+    <section className="flex justify-between">
+      <h1 className="text-3xl">All Task</h1>
+      <TaskPopUp/>
     </section>
+   </section>
   )
 }

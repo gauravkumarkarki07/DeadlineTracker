@@ -7,7 +7,7 @@ export default function index() {
       <section className="w-[200px]">
         <Sidebar/>
       </section>
-      <section className="px-4 py-4">
+      <section className="px-4 py-4 w-full h-full">
         <Outlet/>
       </section>
     </section>
