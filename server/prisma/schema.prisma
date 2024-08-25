@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  firstName String
+  lastName  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  account   Account?
+}
+
+model Account {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @unique
+  user      User      @relation(fields: [userId], references: [id])
+  username  String
+  email     String
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Project   Project[]
+}
+
+model Project {
+  id          Int        @id @default(autoincrement())
+  name        String
+  description String?
+  accountId   Int
+  account     Account    @relation(fields: [accountId], references: [id])
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  deadlines   Deadline[]
+}
+
+model Deadline {
+  id          Int            @id @default(autoincrement())
+  title       String
+  description String?
+  dueDate     DateTime
+  status      DeadlineStatus
+  project     Project        @relation(fields: [projectId], references: [id])
+  projectId   Int
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+enum DeadlineStatus {
+  PENDING
+  COMPLETED
+  OVERDUE
+}
