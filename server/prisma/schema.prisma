@@ -13,23 +13,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  firstName String
-  lastName  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  account   Account?
-}
-
 model Account {
   id        Int       @id @default(autoincrement())
-  userId    Int       @unique
-  user      User      @relation(fields: [userId], references: [id])
   username  String
   email     String
   password  String
+  firstName String?
+  lastName  String?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Project   Project[]

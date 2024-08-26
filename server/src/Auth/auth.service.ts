@@ -2,13 +2,11 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/Database/database.service';
 import {
   CreateAccountResponseDto,
-  CreateUserResponseDto,
   LoginResponseDto,
 } from './dto/auth.response.dto';
 import { DtoMapper } from 'src/Utils/dtoMapper';
 import {
   CreateAccountRequestDto,
-  CreateUserRequestDto,
   LoginRequestDto,
 } from './dto/auth.request.dto';
 import { hashSync, compareSync } from 'bcryptjs';
@@ -18,21 +16,6 @@ import { plainToInstance } from 'class-transformer';
 @Injectable()
 export class AuthService {
   constructor(private readonly databaseService: DatabaseService) {}
-  //Create User
-  async createUser(data: CreateUserRequestDto): Promise<CreateUserResponseDto> {
-    try {
-      const newUser = await this.databaseService.user.create({
-        data,
-      });
-      if (!newUser) {
-        throw new Error('Cannot create user');
-      }
-      const response = DtoMapper.toDto(newUser, CreateUserResponseDto);
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  }
 
   //Create Account
   async createAccount(
@@ -56,7 +39,8 @@ export class AuthService {
           email: data.email,
           password: hashedPassword,
           username: data.username,
-          userId: data.userId,
+          firstName: data.firstName,
+          lastName: data.lastName,
         },
       });
       if (!newAccount) {
@@ -96,7 +80,6 @@ export class AuthService {
       const response = plainToInstance(LoginResponseDto, {
         username: validAccount.username,
         email: validAccount.email,
-        userId: validAccount.userId,
         accessToken: token,
       });
       return response;
