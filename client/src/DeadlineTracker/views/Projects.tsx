@@ -1,4 +1,4 @@
-import { Button } from "@/shadcn/components/ui/button"
+import ProjectCreateDialog from "../components/ProjectCreateDialog"
 
 function Projects() {
   return (
@@ -7,7 +7,10 @@ function Projects() {
         Projects
       </h1>
       <section>
-        <Button>Add Project</Button>
+        <ProjectCreateDialog/>
+      </section>
+      <section>
+        Project Details
       </section>
     </section>
   )
