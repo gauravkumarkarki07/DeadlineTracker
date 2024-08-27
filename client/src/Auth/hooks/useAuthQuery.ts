@@ -41,16 +41,25 @@ export const useCreateAccount=()=>{
 }
 
 export const useLogin=()=>{
+    const {toast}=useToast();
     return useMutation({
         mutationFn:async(data:Login)=>{
             const response =await ApiManager.post(AuthEndpoints.login(),data);
             return response;
         },
         onSuccess:(token)=>{
-            console.log(token);
+            document.cookie = `accessToken=${token.accessToken}; path=/; Secure=False; SameSite=Strict`;
+            toast({
+                description:"Login Successfull",
+                variant:'success'
+            });
         },
         onError:(error)=>{
-            alert(error.message);
+            toast({
+                title:"Ops !!",
+                description:error.message,
+                variant:'destructive'
+            })
         }
     })
 }
