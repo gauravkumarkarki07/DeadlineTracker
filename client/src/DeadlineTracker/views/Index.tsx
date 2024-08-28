@@ -4,10 +4,12 @@ import Sidebar from "../components/Sidebar"
 function Index() {
   return (
     <section className="flex">
-      <section className="max-w-[20%]">
+      <section>
         <Sidebar />
       </section>
+      <section>
         <Outlet />
+      </section>
     </section>
   )
 }

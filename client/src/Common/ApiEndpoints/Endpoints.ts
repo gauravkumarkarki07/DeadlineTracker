@@ -22,6 +22,12 @@ const AuthEndpoints={
   },
   login:()=>{
     return `auth/login`
+  },
+  verifyToken:()=>{
+    return 'auth/verifytoken'
+  },
+  logout:()=>{
+    return 'auth/logout'
   }
 }
 

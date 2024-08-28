@@ -7,50 +7,57 @@ import DeadlineTracker from "@/DeadlineTracker/views/Index";
 import Dashboard from "@/DeadlineTracker/views/Dashboard";
 import Projects from "@/DeadlineTracker/views/Projects";
 import Calendar from "@/DeadlineTracker/views/Calendar";
+import ProtectedRoute from "@/DeadlineTracker/components/ProtectedRoute";
 
-const router=createBrowserRouter([
+const router = createBrowserRouter([
     {
-        path:'',
-        element:<App/>,
-        children:[
+        path: '',
+        element: <App />,
+        children: [
             {
-                path:'auth',
-                element:<Index/>,
-                children:[
+                path: 'auth',
+                element: <Index />,
+                children: [
                     {
-                        path:'signup',
-                        element:<SignUp/>
+                        path: 'signup',
+                        element: <SignUp />
                     },
                     {
-                        path:'login',
-                        element:<Login/>
+                        path: 'login',
+                        element: <Login />
                     }
                 ]
             },
             {
-                path:'deadline-tracker',
-                element:<DeadlineTracker/>,
-                children:[
+                path: 'deadline-tracker',
+                element: <ProtectedRoute />,
+                children: [
                     {
-                        path:'',
-                        element:<Navigate to={'dashboard'} replace={true}/>
-                    },
-                    {
-                        path:'dashboard',
-                        index:true,
-                        element:<Dashboard/>
-                    },
-                    {
-                        path:'projects',
-                        element:<Projects/>
-                    },
-                    {
-                        path:'calendar',
-                        index:true,
-                        element:<Calendar/>
-                    },
+                        path: '',
+                        element: <DeadlineTracker />,
+                        children: [
+                            {
+                                path: '',
+                                element: <Navigate to={'dashboard'} replace={true} />
+                            },
+                            {
+                                path: 'dashboard',
+                                index: true,
+                                element: <Dashboard />
+                            },
+                            {
+                                path: 'projects',
+                                element: <Projects />
+                            },
+                            {
+                                path: 'calendar',
+                                index: true,
+                                element: <Calendar />
+                            },
+                        ]
+                    }
                 ]
-            }
+            },
 
         ]
     }

@@ -2,20 +2,22 @@ import { Button } from "@/shadcn/components/ui/button"
 import { Input } from "@/shadcn/components/ui/input"
 import { Label } from "@/shadcn/components/ui/label"
 import { useForm } from "react-hook-form"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Login as LoginForm, useLogin } from "../hooks/useAuthQuery"
 import { useState } from "react"
 import { Eye,EyeOff } from "lucide-react"
 
 function Login() {
+    const navigate=useNavigate();
     const{mutateAsync}=useLogin();
     const{register,handleSubmit,formState:{errors}}=useForm<LoginForm>();
 
     const Login=async(data:LoginForm)=>{
-        await mutateAsync(data);
-    }
-
-    
+       const response= await mutateAsync(data);
+        if(response){
+            return navigate('/deadline-tracker');
+        }
+    }    
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => {
