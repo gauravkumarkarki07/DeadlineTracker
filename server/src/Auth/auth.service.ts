@@ -84,6 +84,7 @@ export class AuthService {
       });
       res.cookie('accessToken', token, {
         httpOnly: true,
+        sameSite: 'lax',
         secure: false,
         maxAge: 36 * 10000,
       });
