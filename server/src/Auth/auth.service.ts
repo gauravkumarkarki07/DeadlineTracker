@@ -12,6 +12,7 @@ import {
 import { hashSync, compareSync } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { plainToInstance } from 'class-transformer';
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -54,7 +55,7 @@ export class AuthService {
   }
 
   //Login
-  async Login(data: LoginRequestDto): Promise<LoginResponseDto> {
+  async Login(data: LoginRequestDto, res: Response): Promise<LoginResponseDto> {
     try {
       const validAccount = await this.databaseService.account.findFirst({
         where: {
@@ -80,7 +81,11 @@ export class AuthService {
       const response = plainToInstance(LoginResponseDto, {
         username: validAccount.username,
         email: validAccount.email,
-        accessToken: token,
+      });
+      res.cookie('accessToken', token, {
+        httpOnly: true,
+        secure: false,
+        maxAge: 36 * 10000,
       });
       return response;
     } catch (error) {
