@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { DatabaseService } from 'src/Database/database.service';
 import {
   CreateAccountResponseDto,
@@ -100,6 +105,20 @@ export class AuthService {
       return response;
     } catch (error) {
       throw error;
+    }
+  }
+
+  //Logout
+  async Logout(res: Response) {
+    try {
+      res.clearCookie('accessToken', {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: false,
+      });
+      return res.status(200).json({ message: 'Logout Successfull' });
+    } catch (error) {
+      throw new InternalServerErrorException('Server Error');
     }
   }
 }

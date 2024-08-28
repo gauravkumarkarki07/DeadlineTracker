@@ -37,4 +37,9 @@ export class AuthController {
   async verifyToken(@Req() req: Request) {
     return this.jwtService.verifyToken(req);
   }
+
+  @Post('logout')
+  async logout(@Res() res: Response) {
+    return this.authService.Logout(res);
+  }
 }
