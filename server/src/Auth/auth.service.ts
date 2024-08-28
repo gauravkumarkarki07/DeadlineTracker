@@ -75,9 +75,18 @@ export class AuthService {
           HttpStatus.UNAUTHORIZED,
         );
       }
-      const token = sign({ id: validAccount.id }, process.env.JWT_SECRET_KEY, {
-        expiresIn: '1h',
-      });
+      const token = sign(
+        {
+          id: validAccount.id,
+          username: validAccount.username,
+          firstName: validAccount.firstName,
+          lastName: validAccount.lastName,
+        },
+        process.env.JWT_SECRET_KEY,
+        {
+          expiresIn: '1h',
+        },
+      );
       const response = plainToInstance(LoginResponseDto, {
         username: validAccount.username,
         email: validAccount.email,

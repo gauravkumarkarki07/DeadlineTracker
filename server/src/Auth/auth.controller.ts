@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, Post, Req, Res, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import {
   CreateAccountResponseDto,
@@ -8,11 +8,15 @@ import {
   CreateAccountRequestDto,
   LoginRequestDto,
 } from './dto/auth.request.dto';
-import { Response } from 'express';
+import { Request, Response } from 'express';
+import { JwtService } from './jwt.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   @Post('create-account')
   async createAccount(
@@ -27,5 +31,10 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
   ): Promise<LoginResponseDto> {
     return this.authService.Login(data, res);
+  }
+
+  @Get('verifytoken')
+  async verifyToken(@Req() req: Request) {
+    return this.jwtService.verifyToken(req);
   }
 }
