@@ -8,6 +8,7 @@ import Dashboard from "@/DeadlineTracker/views/Dashboard";
 import Projects from "@/DeadlineTracker/views/Projects";
 import Calendar from "@/DeadlineTracker/views/Calendar";
 import ProtectedRoute from "@/DeadlineTracker/components/ProtectedRoute";
+import NotFound from "@/DeadlineTracker/views/NotFound";
 
 const router = createBrowserRouter([
     {
@@ -58,8 +59,11 @@ const router = createBrowserRouter([
                     }
                 ]
             },
-
-        ]
+            {
+                path:'*',
+                element:<NotFound/>
+            }
+        ],
     }
 ])
 
