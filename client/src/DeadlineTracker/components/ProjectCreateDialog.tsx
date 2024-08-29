@@ -5,13 +5,11 @@ import { Label } from '@/shadcn/components/ui/label'
 import { Textarea } from '@/shadcn/components/ui/textarea'
 import { useForm } from 'react-hook-form';
 import { ProjectDetailsForm, useCreateProject } from '../hooks/useProjectQuery'
-import { useContext } from 'react'
-import { AuthContext } from '@/Common/Provider/AuthContext'
 
 function ProjectCreateDialog() {
     const { register, handleSubmit, formState: { errors } } = useForm<ProjectDetailsForm>();
-    const userDetails = useContext(AuthContext);
     const { mutateAsync: create } = useCreateProject();
+    const userDetails = JSON.parse(sessionStorage.getItem('userDetails') || 'null');
 
     const createProject = async (data: ProjectDetailsForm) => {
         await create({ accountId: Number(userDetails?.id), data })

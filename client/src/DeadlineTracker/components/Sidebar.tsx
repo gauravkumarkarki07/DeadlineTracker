@@ -1,20 +1,18 @@
 import { useState } from 'react';
 import { House, Calendar, ClipboardList, Menu, LogOut } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useLogout } from '@/Auth/hooks/useAuthQuery';
+import {useLogout} from '@/Auth/hooks/useAuthQuery';
 
 function Sidebar() {
-    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(true);
     const toggleSidebar = () => setIsOpen(!isOpen);
-    const { mutateAsync: logout, isSuccess } = useLogout();
 
+    const{mutateAsync:handleLogout}=useLogout();
+    const navigate=useNavigate();
 
-    const handleLogout = async () => {
-        return await logout();
-    }
-    if (isSuccess) {
-        navigate('/auth/login')
+    const Logout = async () => {
+         await handleLogout();
+         navigate('/auth/login')
     }
 
     return (
@@ -39,7 +37,7 @@ function Sidebar() {
                     {isOpen && <span>Calendar</span>}
                 </NavLink>
             </section>
-            <section className='flex items-center gap-2 cursor-pointer' onClick={handleLogout}>
+            <section className='flex items-center gap-2 cursor-pointer' onClick={Logout}>
                 <LogOut />
                 {isOpen && <span>Logout</span>}
             </section>
