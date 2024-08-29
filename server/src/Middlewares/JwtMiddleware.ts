@@ -9,19 +9,16 @@ import { verify } from 'jsonwebtoken';
 @Injectable()
 export class JwtMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-
+    const token = req.cookies.accessToken;
     if (!token) {
       throw new UnauthorizedException('Token not found');
     }
-
     try {
       const decoded = verify(token, process.env.JWT_SECRET_KEY);
       req['user'] = decoded;
       next();
     } catch (error) {
-      throw new UnauthorizedException('Invalid Token');
+      throw new UnauthorizedException('Invalid Credentials');
     }
   }
 }

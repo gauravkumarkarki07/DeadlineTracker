@@ -101,10 +101,11 @@ export class AuthService {
         sameSite: 'lax',
         secure: false,
         maxAge: 36 * 10000,
+        path: '/',
       });
       return response;
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException('Server Error');
     }
   }
 
