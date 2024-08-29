@@ -4,13 +4,17 @@ import { Input } from '@/shadcn/components/ui/input'
 import { Label } from '@/shadcn/components/ui/label'
 import { Textarea } from '@/shadcn/components/ui/textarea'
 import { useForm } from 'react-hook-form';
-import { ProjectDetailsForm } from '../hooks/useProjectQuery'
+import { ProjectDetailsForm, useCreateProject } from '../hooks/useProjectQuery'
+import { useContext } from 'react'
+import { AuthContext } from '@/Common/Provider/AuthContext'
 
 function ProjectCreateDialog() {
     const { register, handleSubmit, formState: { errors } } = useForm<ProjectDetailsForm>();
+    const userDetails = useContext(AuthContext);
+    const { mutateAsync: create } = useCreateProject();
 
-    const createProject = (data:ProjectDetailsForm) => {
-        console.log(data)
+    const createProject = async (data: ProjectDetailsForm) => {
+        await create({ accountId: Number(userDetails?.id), data })
     }
 
     return (
@@ -39,7 +43,7 @@ function ProjectCreateDialog() {
                                 <Button variant={'destructive'} type="button">Cancel</Button>
                             </DialogClose>
                             <Button type="submit">Create Project</Button>
-                        </section> 
+                        </section>
                     </DialogFooter>
                 </form>
             </DialogContent>

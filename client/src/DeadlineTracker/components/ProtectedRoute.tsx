@@ -1,13 +1,14 @@
 import { Outlet, Navigate } from "react-router-dom";
-import { useVerifyToken } from "@/Auth/hooks/useAuthQuery";
 import { toast } from "@/shadcn/components/ui/use-toast";
+import { useContext } from "react";
+import { AuthContext } from "@/Common/Provider/AuthContext";
 
 function ProtectedRoute() {
-  const {isError, error } = useVerifyToken();
+  const userDetails=useContext(AuthContext);
 
-  if (isError) {
+  if (!userDetails) {
     toast({
-      description:error.message,
+      description:'Please Login',
       variant:'destructive'
     })
     return <Navigate to="/auth/login" replace />;
