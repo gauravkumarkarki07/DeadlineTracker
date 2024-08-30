@@ -1,11 +1,13 @@
 import { ApiManager } from "@/Common/ApiEndpoints/ApiManager";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {ProjectEndpoints} from '@/Common/ApiEndpoints/Endpoints';
 import { useToast } from "@/shadcn/components/ui/use-toast";
 
 export interface ProjectDetailsForm{
+    id:number;
     name:string,
     description?:string;
+    createdAt:string;
 }
 
 export const useGetProjectDetails=(accountId:number)=>{
@@ -14,7 +16,8 @@ export const useGetProjectDetails=(accountId:number)=>{
         queryFn:async()=>{
                 const response = await ApiManager.get(ProjectEndpoints.getAllProject(accountId));
                 return response;
-        }
+        },
+        retry:2
     })
 }
 
@@ -30,6 +33,7 @@ export const useGetProjectDetailById=(accountId:number,projectId:number)=>{
 
 export const useCreateProject=()=>{
     const { toast } = useToast();
+    const queryClient=useQueryClient();
     return useMutation({
         mutationFn:async({accountId,data}:{accountId:number,data:ProjectDetailsForm})=>{
             const response=await ApiManager.post(ProjectEndpoints.createProject(accountId),data);
@@ -40,6 +44,7 @@ export const useCreateProject=()=>{
                 description:'Project Created Successfully',
                 variant:'success'
             })
+            queryClient.invalidateQueries({queryKey:['projectDetails']})
         },
         onError:(error)=>{
             toast({
@@ -52,6 +57,7 @@ export const useCreateProject=()=>{
 
 export const useUpdateProject=(accountId:number,projectId:number,updatedData:ProjectDetailsForm)=>{
     const { toast } = useToast();
+    const queryClient=useQueryClient();
     return useMutation({
         mutationFn:async()=>{
             const response=await ApiManager.put(ProjectEndpoints.updateProject(accountId,projectId),updatedData);
@@ -62,6 +68,7 @@ export const useUpdateProject=(accountId:number,projectId:number,updatedData:Pro
                 description:'Project Updated Successfully',
                 variant:'success'
             })
+            queryClient.invalidateQueries({queryKey:['projectDetails']})
         },
         onError:(error)=>{
             toast({
@@ -72,10 +79,11 @@ export const useUpdateProject=(accountId:number,projectId:number,updatedData:Pro
     })
 }
 
-export const useDeleteProject=(accountId:number,projectId:number)=>{
+export const useDeleteProject=()=>{
     const { toast } = useToast();
+    const queryClient=useQueryClient();
     return useMutation({
-        mutationFn:async()=>{
+        mutationFn:async({accountId,projectId}:{accountId:number,projectId:number})=>{
             const response=await ApiManager.delete(ProjectEndpoints.deleteProject(accountId,projectId));
             return response;
         },
@@ -84,6 +92,7 @@ export const useDeleteProject=(accountId:number,projectId:number)=>{
                 description:'Project Deleted Successfully',
                 variant:'success'
             })
+            queryClient.invalidateQueries({queryKey:['projectDetails']})
         },
         onError:(error)=>{
             toast({

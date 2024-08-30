@@ -5,18 +5,22 @@ import { Label } from '@/shadcn/components/ui/label'
 import { Textarea } from '@/shadcn/components/ui/textarea'
 import { useForm } from 'react-hook-form';
 import { ProjectDetailsForm, useCreateProject } from '../hooks/useProjectQuery'
+import { useState } from 'react'
 
 function ProjectCreateDialog() {
     const { register, handleSubmit, formState: { errors } } = useForm<ProjectDetailsForm>();
-    const { mutateAsync: create } = useCreateProject();
+    const { mutateAsync: create,reset} = useCreateProject();
     const userDetails = JSON.parse(sessionStorage.getItem('userDetails') || 'null');
+    const[isOpen,setOpen]=useState(false);
 
     const createProject = async (data: ProjectDetailsForm) => {
         await create({ accountId: Number(userDetails?.id), data })
+        reset();
+        setOpen(false);        
     }
 
     return (
-        <Dialog>
+        <Dialog open={isOpen} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button>Add Project</Button>
             </DialogTrigger>

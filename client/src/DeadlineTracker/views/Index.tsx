@@ -7,7 +7,7 @@ function Index() {
       <section>
         <Sidebar />
       </section>
-      <section>
+      <section className="w-full">
         <Outlet />
       </section>
     </section>

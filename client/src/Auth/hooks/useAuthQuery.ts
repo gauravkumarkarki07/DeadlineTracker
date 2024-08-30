@@ -44,7 +44,6 @@ export const useCreateAccount = () => {
 
 export const useLogin = () => {
   const queryClient=useQueryClient();
-  const { toast } = useToast();
   return useMutation({
     mutationFn: async (data: Login) => {
       const response=await ApiManager.post(AuthEndpoints.login(), data);
@@ -52,11 +51,6 @@ export const useLogin = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey:['Jwt']});
-      toast({
-        description: "Login Successfull",
-        variant: "success",
-      });
-
     },
     onError: (error) => {
       toast({
@@ -69,11 +63,17 @@ export const useLogin = () => {
 };
 
 export const useVerifyToken = () => {
+  const { toast } = useToast();
   return useQuery({
     queryKey: ["Jwt"],
     queryFn: async () => {
       const response = await ApiManager.get(AuthEndpoints.verifyToken());
       sessionStorage.setItem('userDetails',JSON.stringify(response));
+      toast({
+        description: "Login Successfull",
+        variant: "success",
+      });
+
       return response;
     },
     retry: false,
