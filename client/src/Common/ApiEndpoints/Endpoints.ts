@@ -31,4 +31,22 @@ const AuthEndpoints={
   }
 }
 
-export {ProjectEndpoints,AuthEndpoints}
+const TaskEndpoints={
+  getAllTasks:()=>{
+    return 'project/:projectId/tasks'
+  },
+  getTaskById:()=>{
+    return `project/:projectId/:taskId`
+  },
+  createTask:()=>{
+    return `project/:projectId/task`
+  },
+  updateTask:()=>{
+    return `project/:projectId/:taskId`
+  },
+  deleteTask:()=>{
+    return `project/:projectId/:taskId`
+  }
+}
+
+export {ProjectEndpoints,AuthEndpoints,TaskEndpoints}
