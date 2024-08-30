@@ -122,7 +122,7 @@ export class ProjectService {
   }
 
   //Delete Project
-  async deleteProject(accountId: number, projectId: number): Promise<void> {
+  async deleteProject(accountId: number, projectId: number): Promise<boolean> {
     const account = Number(accountId);
     const project = Number(projectId);
     try {
@@ -140,6 +140,7 @@ export class ProjectService {
           id: project,
         },
       });
+      return true;
     } catch (error) {
       throw new InternalServerErrorException('Server Error');
     }

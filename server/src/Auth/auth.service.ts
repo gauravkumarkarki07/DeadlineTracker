@@ -3,6 +3,7 @@ import {
   HttpStatus,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { DatabaseService } from 'src/Database/database.service';
 import {
@@ -50,7 +51,7 @@ export class AuthService {
         },
       });
       if (!newAccount) {
-        throw new Error('Account couldnt be created');
+        throw new InternalServerErrorException('Account couldnt be created');
       }
       const response = DtoMapper.toDto(newAccount, CreateAccountResponseDto);
       return response;
@@ -70,8 +71,8 @@ export class AuthService {
           ],
         },
       });
-      if (!validAccount) {
-        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      if (!validAccount || validAccount === null) {
+        throw new NotFoundException('User not found');
       }
       const validPassword = compareSync(data.password, validAccount.password);
       if (!validPassword) {
@@ -98,9 +99,9 @@ export class AuthService {
       });
       res.cookie('accessToken', token, {
         httpOnly: true,
-        sameSite: 'lax',
+        sameSite: 'strict',
         secure: false,
-        maxAge: 36 * 10000,
+        maxAge: 60 * 60 * 1000,
         path: '/',
       });
       return response;
