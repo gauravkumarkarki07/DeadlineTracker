@@ -55,11 +55,11 @@ export const useCreateProject=()=>{
     })
 }
 
-export const useUpdateProject=(accountId:number,projectId:number,updatedData:ProjectDetailsForm)=>{
+export const useUpdateProject=()=>{
     const { toast } = useToast();
     const queryClient=useQueryClient();
     return useMutation({
-        mutationFn:async()=>{
+        mutationFn:async({accountId,projectId,updatedData}:{accountId:number,projectId:number,updatedData:ProjectDetailsForm})=>{
             const response=await ApiManager.put(ProjectEndpoints.updateProject(accountId,projectId),updatedData);
             return response;
         },

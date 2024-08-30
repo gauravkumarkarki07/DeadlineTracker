@@ -9,6 +9,7 @@ import Projects from "@/DeadlineTracker/views/Projects";
 import Calendar from "@/DeadlineTracker/views/Calendar";
 import ProtectedRoute from "@/DeadlineTracker/components/ProtectedRoute";
 import NotFound from "@/DeadlineTracker/views/NotFound";
+import ProjectEditPage from "@/DeadlineTracker/components/ProjectEditPage";
 
 const router = createBrowserRouter([
     {
@@ -48,7 +49,11 @@ const router = createBrowserRouter([
                             },
                             {
                                 path: 'projects',
-                                element: <Projects />
+                                element: <Projects />,
+                            },
+                            {
+                                path: 'projects/:projectId',
+                                element: <ProjectEditPage/>,
                             },
                             {
                                 path: 'calendar',

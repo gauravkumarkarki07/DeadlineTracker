@@ -1,23 +1,28 @@
 import { Button } from "@/shadcn/components/ui/button";
 import { ProjectDetailsForm, useDeleteProject } from "../hooks/useProjectQuery";
+import { useNavigate } from "react-router-dom";
 
 interface ProjectCardInterFace {
     projects: ProjectDetailsForm[] | null
 }
 
 export default function ProjectCard({ projects }: ProjectCardInterFace) {
+    const navigate=useNavigate();
+
     const { mutateAsync: deletProject } = useDeleteProject();
 
     if (!projects || projects.length === 0) {
         return <span>No Projects Found</span>;
     }
 
-    console.log(projects);
-    
     const userDetails = JSON.parse(sessionStorage.getItem('userDetails') || 'null');
 
     const handleDelete = async (projectId: number) => {
         await deletProject({accountId:Number(userDetails.id),projectId});
+    }
+
+    const navigateToEditPage=(projectId:number)=>{
+        navigate(`/deadline-tracker/projects/${projectId}`)
     }
 
     return (
@@ -44,7 +49,7 @@ export default function ProjectCard({ projects }: ProjectCardInterFace) {
                             </span>
                         </section>
                         <section className="flex flex-col gap-2">
-                            <Button variant={'warning'}>Edit</Button>
+                            <Button variant={'warning'} type="button" onClick={()=>navigateToEditPage(project.id)}>Edit</Button>
                             <Button variant={'destructive'} type="button" onClick={()=>handleDelete(project.id)}>Delete</Button>
                         </section>
                     </section>
