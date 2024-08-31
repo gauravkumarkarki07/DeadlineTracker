@@ -32,20 +32,20 @@ const AuthEndpoints={
 }
 
 const TaskEndpoints={
-  getAllTasks:()=>{
-    return 'project/:projectId/tasks'
+  getAllTasks:(projectId:number)=>{
+    return `deadline/${projectId}`
   },
-  getTaskById:()=>{
-    return `project/:projectId/:taskId`
+  getTaskById:(deadlineId:number,projectId:number)=>{
+    return `deadline/${deadlineId}/${projectId}`
   },
-  createTask:()=>{
-    return `project/:projectId/task`
+  createTask:(projectId:number)=>{
+    return `deadline/${projectId}`
   },
-  updateTask:()=>{
-    return `project/:projectId/:taskId`
+  updateTask:(deadlineId:number,projectId:number)=>{
+    return `deadline/${deadlineId}/${projectId}`
   },
-  deleteTask:()=>{
-    return `project/:projectId/:taskId`
+  deleteTask:(deadlineId:number,projectId:number)=>{
+    return `deadline/${deadlineId}/${projectId}`
   }
 }
 

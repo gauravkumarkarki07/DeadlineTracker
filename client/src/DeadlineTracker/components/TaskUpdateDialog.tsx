@@ -8,43 +8,47 @@ import { Label } from "@/shadcn/components/ui/label"
 import { Textarea } from "@/shadcn/components/ui/textarea"
 import TaskDueDateSelector from "./TaskDueDateSelector"
 import { useForm } from "react-hook-form"
-import { TaskDetails, useCreateTask } from "../hooks/useTaskQuery"
+import { TaskDetails, useGetTaskDetailsById, useUpdateTask } from "../hooks/useTaskQuery"
 import { useParams } from "react-router-dom"
-import { useState } from "react"
-import { CirclePlusIcon } from "lucide-react"
+import { useEffect, useState } from "react"
+import {FilePenLine } from "lucide-react"
 
-function TaskCreateDialog() {
+function TaskUpdateDialog({deadlineId}:{deadlineId:number}) {
     const { projectId } = useParams();
     const projectIdNumber = Number(projectId);
+    const{data:taskById}=useGetTaskDetailsById(deadlineId,projectIdNumber);
     const { register, handleSubmit, control, reset, formState: { errors } } = useForm<TaskDetails>();
-    const { mutateAsync: handleTaskCreate } = useCreateTask();
+    const { mutateAsync: handleTaskUpdate } = useUpdateTask();
     const [isOpen, setIsOpen] = useState(false);
 
-    const createTask = async (data: TaskDetails) => {
-        await handleTaskCreate({ projectId: projectIdNumber, data });
+    const updateTask = async (updatedData: TaskDetails) => {
+        await handleTaskUpdate({ deadlineId,projectId: projectIdNumber, data:updatedData });
         reset();
         setIsOpen(false);
     }
 
+    useEffect(()=>{
+        if(taskById){
+            reset(taskById);
+        }
+    },[taskById,reset])
+
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
-                <Button type="button" variant={'outline'}>
-                    <section className="flex gap-2 items-center">
-                        <CirclePlusIcon />
-                        <span>Add New Task</span>
-                    </section>
+                <Button type="button">
+                    <FilePenLine/>
                 </Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogTitle>Task</DialogTitle>
                 <DialogDescription>
-                    Add Task title and optional description.
+                    Update Task Details.
                 </DialogDescription>
                 <form className="flex flex-col gap-6" onSubmit={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    handleSubmit(createTask)();
+                    handleSubmit(updateTask)();
                 }}>
                     <section className="flex flex-col gap-2">
                         <Label>Title *</Label>
@@ -70,7 +74,7 @@ function TaskCreateDialog() {
                             <DialogClose asChild>
                                 <Button type="button" variant={'destructive'}>Cancel</Button>
                             </DialogClose>
-                            <Button type="submit" variant={'primary'}>Save</Button>
+                            <Button type="submit" variant={'warning'}>Update</Button>
                         </section>
                     </DialogFooter>
                 </form>
@@ -79,4 +83,4 @@ function TaskCreateDialog() {
     )
 }
 
-export default TaskCreateDialog;
+export default TaskUpdateDialog;

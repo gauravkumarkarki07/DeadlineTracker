@@ -1,21 +1,39 @@
-import { Button } from "@/shadcn/components/ui/button"
-import { Trash2,FilePenLine } from 'lucide-react';
+import { Button } from "@/shadcn/components/ui/button";
+import { Trash2 } from 'lucide-react';
 import TaskStatusDropdown from "./TaskStatusDropdown";
 import TaskDateFilter from "./TaskDateFilter";
 import TaskFilter from "./TaskFilter";
 import TaskCreateDialog from "./TaskCreateDialog";
+import { useParams } from "react-router-dom";
+import { TaskDetails, useDeleteTask, useGetAllTaskDetails } from "../hooks/useTaskQuery";
+import { format } from "date-fns";
+import TaskUpdateDialog from "./TaskUpdateDialog";
 
 function TaskTable() {
+    const { projectId } = useParams();
+
+    const { data, isLoading } = useGetAllTaskDetails(Number(projectId));
+
+    const { mutateAsync: deleteTask } = useDeleteTask();
+
+    if (isLoading) {
+        return <section>Loading ...</section>;
+    }
+
+    const handleDelete = async (deadlineId: number) => {
+        await deleteTask({ deadlineId, projectId: Number(projectId) });
+    };
+
     return (
         <section className="flex flex-col gap-4 px-2 py-2 border rounded-md w-full">
             <section className="flex flex-col gap-2">
                 <h2 className="text-xl border-b pb-6 mb-2">Tasks</h2>
                 <section className="flex justify-between items-center">
-                    <TaskStatusDropdown/>
+                    <TaskStatusDropdown />
                     <section className="flex gap-4 items-center">
-                        <TaskDateFilter/>
-                        <TaskFilter/>
-                        <TaskCreateDialog/>
+                        <TaskDateFilter />
+                        <TaskFilter />
+                        <TaskCreateDialog />
                     </section>
                 </section>
             </section>
@@ -30,24 +48,30 @@ function TaskTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className="border-b">
-                        <td className="px-2 py-2">Hasdad</td>
-                        <td className="px-2 py-2">Hasdad</td>
-                        <td className="px-2 py-2">Hasdad</td>
-                        <td className="px-2 py-2">Hasdad</td>
-                        <td className="px-2 py-2 flex gap-2">
-                            <Button type="button">
-                                <FilePenLine/>
-                            </Button>
-                            <Button variant={'destructive'} type="button">
-                                <Trash2/>
-                            </Button>                            
-                        </td>
-                    </tr>
+                    {data?.deadlines.length > 0 ? (
+                        data.deadlines.map((task: TaskDetails, index: number) => (
+                            <tr className="border-b" key={index}>
+                                <td className="px-2 py-2">{task.title}</td>
+                                <td className="px-2 py-2">{task.description ? task.description : '---'}</td>
+                                <td className="px-2 py-2">{task.status}</td>
+                                <td className="px-2 py-2">{format(new Date(task.dueDate), 'PPP')}</td>
+                                <td className="px-2 py-2 flex gap-2">
+                                    <TaskUpdateDialog deadlineId={task.id} />
+                                    <Button variant={'destructive'} type="button" onClick={() => handleDelete(task.id)}>
+                                        <Trash2 />
+                                    </Button>
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan={5} className="px-2 py-2 text-center">No Tasks</td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
         </section>
-    )
+    );
 }
 
-export default TaskTable
+export default TaskTable;
