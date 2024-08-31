@@ -14,8 +14,8 @@ function SignUp() {
     const { register, handleSubmit, formState: { errors } } = useForm<CreateAccount>();
 
     const signUp = async (data: CreateAccount) => {
-        const response=await mutateAsync(data);
-        if(response){
+        const response = await mutateAsync(data);
+        if (response) {
             return navigate('/auth/login')
         }
     }
@@ -28,9 +28,21 @@ function SignUp() {
 
 
     return (
-        <form className="flex flex-col gap-6 justify-center px-4 py-4" onSubmit={handleSubmit(signUp)}>
-            <h1 className="text-3xl">Sign Up</h1>
-            <section className="flex gap-4">
+        <form className="flex flex-col gap-8 justify-center mx-20 my-10 px-2 py-2 items-center" onSubmit={handleSubmit(signUp)}>
+            <article className="flex flex-col gap-2 w-full text-sm">
+                <h1 className="text-3xl">Hello New User!</h1>
+                <section className="flex flex-col text-gray-400">
+                    <section className="flex gap-2">
+                        <span>Have an account ?</span>
+                        <span className="text-secondary hover:underline cursor-pointer">
+                            <Link to={'/auth/login'}>
+                                Login Now
+                            </Link>
+                        </span>
+                    </section>
+                </section>
+            </article>
+            <section className="flex gap-4 w-full">
                 <section className="flex flex-col gap-2 w-full">
                     <Label>First Name</Label>
                     <Input
@@ -46,7 +58,7 @@ function SignUp() {
                     {errors.lastName && <span className="text-xs text-red-500">Last Name is required</span>}
                 </section>
             </section>
-            <section className="flex gap-4">
+            <section className="flex gap-4 w-full">
 
                 <section className="flex flex-col gap-2 w-full">
                     <Label>Email</Label>
@@ -72,12 +84,12 @@ function SignUp() {
                 </section>
             </section>
 
-            <section className="flex flex-col gap-2">
+            <section className="flex flex-col gap-2 w-full">
                 <Label>Password</Label>
                 <section className="flex gap-2">
                     <Input
                         type={showPassword ? 'text' : 'password'}
-                        placeholder="Password123"
+                        placeholder="Create a strong password"
                         {...register('password', {
                             required: 'Password is required',
                             minLength: {
@@ -96,23 +108,15 @@ function SignUp() {
                         onClick={togglePasswordVisibility}
                     >
                         {showPassword ?
-                            <EyeOff strokeWidth={1} />
-                            : <Eye strokeWidth={1} />
+                            <Eye strokeWidth={1} />
+                            : <EyeOff strokeWidth={1} />
                         }
                     </Button>
                 </section>
 
                 {errors.password && <span className="text-xs text-red-500">{errors.password.message}</span>}
             </section>
-            <Button>Sign Up</Button>
-            <section className="flex gap-2 justify-center">
-                <span>Have an account ?</span>
-                <span className="text-secondary hover:underline cursor-pointer">
-                    <Link to={'/auth/login'}>
-                        Login
-                    </Link>
-                </span>
-            </section>
+            <Button className="w-full">Sign Up</Button>
         </form>
     )
 }
