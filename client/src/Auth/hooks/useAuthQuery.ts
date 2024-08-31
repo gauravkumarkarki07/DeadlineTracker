@@ -86,9 +86,9 @@ export const useLogout = () => {
   return useMutation({
     mutationFn: async () => {
       await ApiManager.post(AuthEndpoints.logout(), {});
-      sessionStorage.removeItem('userDetails');
     },
     onSuccess: () => {
+      sessionStorage.removeItem('userDetails');
       queryClient.invalidateQueries({queryKey:['Jwt']});
       toast({
         description: "Logout Succesfull",
