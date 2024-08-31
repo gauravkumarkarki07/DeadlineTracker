@@ -34,6 +34,9 @@ module.exports = {
       colors:{
         primary:'#0077b6',
         secondary:'00b4d8'
+      },
+      fontFamily:{
+        Poppins:["Poppins","sans-serif"]
       }
     },
   },
