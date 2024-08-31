@@ -134,7 +134,10 @@ export class DeadlineService {
   }
 
   //Delete Deadline
-  async deleteDeadline(deadlineId: number, projectId: number): Promise<void> {
+  async deleteDeadline(
+    deadlineId: number,
+    projectId: number,
+  ): Promise<GetDeadlineByIdResponseDto> {
     const id = Number(deadlineId);
     const project = Number(projectId);
     try {
@@ -156,6 +159,7 @@ export class DeadlineService {
       if (!deleteDeadline) {
         throw new InternalServerErrorException('Cannot delete deadline');
       }
+      return deleteDeadline;
     } catch (error) {
       throw new InternalServerErrorException('Server Error');
     }

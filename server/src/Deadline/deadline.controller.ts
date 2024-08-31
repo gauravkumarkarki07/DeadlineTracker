@@ -32,8 +32,8 @@ export class DeadlineController {
 
   @Get(':deadlineId/:projectId')
   async getDeadlineById(
-    deadlineId: number,
-    projectId: number,
+    @Param('deadlineId') deadlineId: number,
+    @Param('projectId') projectId: number,
   ): Promise<GetDeadlineByIdResponseDto> {
     return this.deadlineService.getDeadlineById(deadlineId, projectId);
   }
@@ -65,7 +65,7 @@ export class DeadlineController {
   async deleteDeadline(
     @Param('deadlineId') deadlineId: number,
     @Param('projectId') projectId: number,
-  ): Promise<void> {
+  ): Promise<GetDeadlineByIdResponseDto> {
     return this.deadlineService.deleteDeadline(deadlineId, projectId);
   }
 }

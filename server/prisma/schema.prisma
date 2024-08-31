@@ -41,7 +41,7 @@ model Deadline {
   title       String
   description String?
   dueDate     DateTime
-  status      DeadlineStatus
+  status      DeadlineStatus @default(PENDING)
   project     Project        @relation(fields: [projectId], references: [id])
   projectId   Int
   createdAt   DateTime       @default(now())
