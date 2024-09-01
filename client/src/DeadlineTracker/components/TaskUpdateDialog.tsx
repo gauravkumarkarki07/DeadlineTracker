@@ -12,6 +12,7 @@ import { TaskDetails, useGetTaskDetailsById, useUpdateTask } from "../hooks/useT
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import {FilePenLine } from "lucide-react"
+import TaskEditStatusDropdown from "./TaskEditStatusDropdown"
 
 function TaskUpdateDialog({deadlineId}:{deadlineId:number}) {
     const { projectId } = useParams();
@@ -68,6 +69,11 @@ function TaskUpdateDialog({deadlineId}:{deadlineId:number}) {
                         <Label>Due Date *</Label>
                         <TaskDueDateSelector control={control} />
                         {errors.dueDate && <span className='text-sm text-red-500'>{errors.dueDate.message}</span>}
+                    </section>
+                    <section className="flex flex-col gap-2">
+                        <Label>Status *</Label>
+                        <TaskEditStatusDropdown control={control}/>
+                        {errors.status && <span className='text-sm text-red-500'>{errors.status.message}</span>}
                     </section>
                     <DialogFooter>
                         <section className="flex items-center justify-between w-full">

@@ -24,6 +24,19 @@ function TaskTable() {
         await deleteTask({ deadlineId, projectId: Number(projectId) });
     };
 
+    const getStatusColor=(status:string):string=>{
+        switch(status){
+            case 'PENDING':
+                return 'text-yellow-500'
+            case 'COMPLETED':
+                return 'text-green-500'
+            case 'OVERDUE':
+                return 'text-red-500'
+            default:
+                return 'text-gray-500'
+        }
+    }
+
     return (
         <section className="flex flex-col gap-4 border w-full drop-shadow-md bg-white px-4 py-4 rounded-lg">
             <section className="flex flex-col gap-2">
@@ -58,7 +71,7 @@ function TaskTable() {
                             <tr className="border-b" key={index}>
                                 <td className="px-2 py-2">{task.title}</td>
                                 <td className="px-2 py-2">{task.description ? task.description : '---'}</td>
-                                <td className="px-2 py-2">{task.status}</td>
+                                <td className={`px-2 py-2 ${getStatusColor(task.status)}`}>{task.status}</td>
                                 <td className="px-2 py-2">{format(new Date(task.dueDate), 'PPP')}</td>
                                 <td className="px-2 py-2 flex gap-2">
                                     <TaskUpdateDialog deadlineId={task.id} />

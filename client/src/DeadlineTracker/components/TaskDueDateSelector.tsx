@@ -3,7 +3,7 @@ import { Calendar } from "@/shadcn/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/components/ui/popover"
 import { CalendarIcon } from "lucide-react"
 import { cn } from "@/shadcn/lib/utils"
-import { format } from 'date-fns'
+import { format, isBefore, startOfToday } from 'date-fns'
 import { Control, Controller } from "react-hook-form"
 import { TaskDetails } from "../hooks/useTaskQuery"
 
@@ -12,6 +12,8 @@ interface TaskDueDateSelector{
 }
 
 function TaskDueDateSelector({ control }:TaskDueDateSelector) {
+    const today=startOfToday();
+
     return (
         <Popover>
             <PopoverTrigger asChild>
@@ -49,10 +51,13 @@ function TaskDueDateSelector({ control }:TaskDueDateSelector) {
                             mode="single"
                             selected={value}
                             onSelect={(date)=>{
-                                onChange(date);
-                                onBlur();
+                                if(date && !isBefore(date,today)){
+                                    onChange(date);
+                                    onBlur();
+                                }
                             }}
                             initialFocus
+                            disabled={(date)=>isBefore(date,today)}
                         />
                     )}
                 />
