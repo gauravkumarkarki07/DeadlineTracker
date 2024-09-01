@@ -31,9 +31,9 @@ function Login() {
                 <section className="flex flex-col text-gray-400">
                     <section className="flex gap-2">
                         <span>Dont have an account ?</span>
-                        <span className="text-secondary hover:underline cursor-pointer">
+                        <span className="text-secondary hover:text-accentPrimary underline cursor-pointer">
                             <Link to={'/auth/signup'}>
-                                Create a new account now,
+                                Create a free account now
                             </Link>
                         </span>
                     </section>
@@ -84,7 +84,7 @@ function Login() {
             <Button className="w-full">Login</Button>
             <section className="flex gap-2 text-gray-400 text-sm">
                 <span>Forget Password ?</span>
-                <span className="text-secondary hover:underline cursor-pointer">
+                <span className="text-secondary hover:text-accentPrimary underline cursor-pointer">
                     <Link to={'/auth/signup'}>
                         Click here
                     </Link>

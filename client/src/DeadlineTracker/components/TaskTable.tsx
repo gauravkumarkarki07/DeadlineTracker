@@ -25,9 +25,14 @@ function TaskTable() {
     };
 
     return (
-        <section className="flex flex-col gap-4 px-2 py-2 border rounded-md w-full">
+        <section className="flex flex-col gap-4 border w-full drop-shadow-md bg-white px-4 py-4 rounded-lg">
             <section className="flex flex-col gap-2">
-                <h2 className="text-xl border-b pb-6 mb-2">Tasks</h2>
+                <article className="flex flex-col border-b pb-2 mb-2 gap-1">
+                    <h2 className="text-lg">Tasks</h2>
+                    <span className="text-xs text-gray-500">
+                        Click <span className="text-black">*Add New Task</span> button to create tasks for this project.
+                    </span>
+                </article>
                 <section className="flex justify-between items-center">
                     <TaskStatusDropdown />
                     <section className="flex gap-4 items-center">

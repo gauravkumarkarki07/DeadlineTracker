@@ -12,7 +12,7 @@ function ProtectedRoute() {
     sessionStorage.removeItem('userDetails');
   }
 
-  return verifiedUser ? <Outlet /> : <Navigate to={'/auth/login'} replace />
+  return verifiedUser ? <Outlet/> : <Navigate to={'/auth/login'} replace />
 }
 
 export default ProtectedRoute;

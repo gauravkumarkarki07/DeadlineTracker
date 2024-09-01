@@ -3,12 +3,15 @@ import Sidebar from "../components/Sidebar"
 
 function Index() {
   return (
-    <section className="flex">
+    <section className="flex min-h-screen">
       <section>
         <Sidebar />
       </section>
       <section className="w-full">
-        <Outlet />
+        {/* <Header/> */}
+        <section className="bg-gray-100 py-4 px-4 h-full">
+          <Outlet/>
+        </section>
       </section>
     </section>
   )

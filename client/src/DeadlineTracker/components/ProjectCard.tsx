@@ -12,7 +12,7 @@ export default function ProjectCard({ projects }: ProjectCardInterFace) {
     const { mutateAsync: deletProject } = useDeleteProject();
 
     if (!projects || projects.length === 0) {
-        return <span>No Projects Found</span>;
+        return <span className="text-sm text-gray-500">No Projects Found</span>;
     }
 
     const userDetails = JSON.parse(sessionStorage.getItem('userDetails') || 'null');
@@ -36,16 +36,21 @@ export default function ProjectCard({ projects }: ProjectCardInterFace) {
                 });
 
                 return (
-                    <section className="flex px-4 py-4 justify-between border rounded-md w-[400px]" key={index}>
+                    <section className="flex px-4 py-4 justify-between drop-shadow-md rounded-lg w-[400px] bg-white" key={index}>
                         <section className="flex flex-col gap-2">
-                            <h1 className="text-xl">{project.name}</h1>
+                            <h1 className="text-lg">{project.name}</h1>
                             <p className="text-sm flex gap-2">
-                                <span>Description:</span>
-                                {project.description}
+                                <span>
+                                    {project.description}
+                                </span>
                             </p>
-                            <span className="flex gap-2 text-sm">
-                                <span>Created Date:</span>
-                                {formattedDate}
+                            <span className="flex gap-1 text-sm items-center">
+                                <span className="text-gray-500">
+                                    Created At :
+                                </span>
+                                <span className="bg-accentSecondary rounded-md px-2 py-1">
+                                        {formattedDate}
+                                </span>
                             </span>
                         </section>
                         <section className="flex flex-col gap-2">

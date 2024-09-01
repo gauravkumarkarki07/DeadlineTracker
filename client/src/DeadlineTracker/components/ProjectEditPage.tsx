@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import TaskTable from "./TaskTable";
 
 function ProjectEditPage() {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const { projectId } = useParams();
     const userDetails = JSON.parse(sessionStorage.getItem('userDetails') || 'null');
     const { data: projectDetailsById, isLoading } = useGetProjectDetailById(Number(userDetails.id), Number(projectId));
@@ -31,25 +31,32 @@ function ProjectEditPage() {
         return <span>Loading...</span>;
     }
 
-    const goBack=()=>{
+    const goBack = () => {
         navigate('/deadline-tracker/projects');
     }
 
     return (
-        <section className="flex flex-col px-4 py-4 gap-8">
-            <h1 className="text-xl">Project Details</h1>
-            <form className='flex flex-col gap-4' onSubmit={handleSubmit(updateProject)}>
-                <section className='flex flex-col gap-2'>
-                    <Label>Project Name</Label>
-                    <Input {...register('name', { required: true })} />
-                    {errors.name && <span className='text-sm text-red-500'>Project Name is required</span>}
-                </section>
-                <section className='flex flex-col gap-2'>
-                    <Label>Description</Label>
-                    <Textarea className='resize-none' {...register('description')} />
+        <section className="flex flex-col gap-8">
+            <article className="flex flex-col gap-2">
+                <h1 className="text-xl font-semibold">Project Details</h1>
+                <span className="text-sm text-gray-500">
+                    Manage your project details
+                </span>
+            </article>
+            <form className='flex flex-col gap-6' onSubmit={handleSubmit(updateProject)}>
+                <section className="flex flex-col gap-6 drop-shadow-md bg-white px-4 py-4 rounded-lg">
+                    <section className='flex flex-col gap-2'>
+                        <Label>Project Name</Label>
+                        <Input {...register('name', { required: true })} />
+                        {errors.name && <span className='text-sm text-red-500'>Project Name is required</span>}
+                    </section>
+                    <section className='flex flex-col gap-2'>
+                        <Label>Description</Label>
+                        <Textarea className='resize-none' {...register('description')} />
+                    </section>
                 </section>
                 <section>
-                    <TaskTable/>
+                    <TaskTable />
                 </section>
                 <section className="flex justify-between w-full">
                     <Button variant={'secondary'} type="button" onClick={goBack}>Go Back</Button>

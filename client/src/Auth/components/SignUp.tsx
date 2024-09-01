@@ -34,7 +34,7 @@ function SignUp() {
                 <section className="flex flex-col text-gray-400">
                     <section className="flex gap-2">
                         <span>Have an account ?</span>
-                        <span className="text-secondary hover:underline cursor-pointer">
+                        <span className="text-secondary hover:text-accentPrimary underline cursor-pointer">
                             <Link to={'/auth/login'}>
                                 Login Now
                             </Link>
