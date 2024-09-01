@@ -8,8 +8,8 @@ import { ProjectDetailsForm, useCreateProject } from '../hooks/useProjectQuery'
 import { useState } from 'react'
 
 function ProjectCreateDialog() {
-    const { register, handleSubmit, formState: { errors } } = useForm<ProjectDetailsForm>();
-    const { mutateAsync: create,reset} = useCreateProject();
+    const { register, handleSubmit,reset, formState: { errors } } = useForm<ProjectDetailsForm>();
+    const { mutateAsync: create} = useCreateProject();
     const userDetails = JSON.parse(sessionStorage.getItem('userDetails') || 'null');
     const[isOpen,setOpen]=useState(false);
 
