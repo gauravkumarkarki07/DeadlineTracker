@@ -125,21 +125,41 @@ export class ProjectService {
   async deleteProject(accountId: number, projectId: number): Promise<boolean> {
     const account = Number(accountId);
     const project = Number(projectId);
+
     try {
-      const existingProject = await this.databaseService.project.findUnique({
-        where: {
-          id: project,
-          accountId: account,
-        },
+      await this.databaseService.$transaction(async (trx) => {
+        const existingProject = await trx.project.findUnique({
+          where: {
+            id: project,
+            accountId: account,
+          },
+        });
+
+        if (!existingProject) {
+          throw new NotFoundException('Project Not Found');
+        }
+
+        const referenceDeadlines = await trx.deadline.findMany({
+          where: {
+            projectId: project,
+          },
+        });
+
+        if (referenceDeadlines.length > 0) {
+          await trx.deadline.deleteMany({
+            where: {
+              projectId: project,
+            },
+          });
+        }
+
+        await trx.project.delete({
+          where: {
+            id: project,
+          },
+        });
       });
-      if (!existingProject) {
-        throw new NotFoundException('Project Not Found');
-      }
-      await this.databaseService.project.delete({
-        where: {
-          id: project,
-        },
-      });
+
       return true;
     } catch (error) {
       throw new InternalServerErrorException('Server Error');
