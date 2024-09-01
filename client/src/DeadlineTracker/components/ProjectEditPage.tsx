@@ -59,7 +59,7 @@ function ProjectEditPage() {
                     <TaskTable />
                 </section>
                 <section className="flex justify-between w-full">
-                    <Button variant={'secondary'} type="button" onClick={goBack}>Go Back</Button>
+                    <Button variant={'outline'} type="button" onClick={goBack}>Go Back</Button>
                     <Button variant={'warning'} type="submit">Update Project</Button>
                 </section>
             </form>
