@@ -3,7 +3,6 @@ import {
   HttpStatus,
   Injectable,
   InternalServerErrorException,
-  NotFoundException,
 } from '@nestjs/common';
 import { DatabaseService } from 'src/Database/database.service';
 import {
@@ -72,7 +71,7 @@ export class AuthService {
         },
       });
       if (!validAccount || validAccount === null) {
-        throw new NotFoundException('User not found');
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
       }
       const validPassword = compareSync(data.password, validAccount.password);
       if (!validPassword) {
