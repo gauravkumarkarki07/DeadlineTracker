@@ -53,9 +53,10 @@ export const useLogin = () => {
       queryClient.invalidateQueries({queryKey:['Jwt']});
     },
     onError: (error) => {
+      const errorMessage = error?.message || error.message || 'An unexpected error occurred';
       toast({
         title: "Ops !!",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive",
       });
     },
