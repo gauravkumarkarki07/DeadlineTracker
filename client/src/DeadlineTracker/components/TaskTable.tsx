@@ -52,7 +52,7 @@ function TaskTable() {
                         <TaskDateFilter />
                         <TaskFilter />
                         <TaskCreateDialog />
-                    </section>
+                    </section> 
                 </section>
             </section>
             <table className="text-sm text-left w-full">
