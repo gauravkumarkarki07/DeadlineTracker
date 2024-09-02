@@ -8,6 +8,7 @@ export interface ProjectDetailsForm{
     name:string,
     description?:string;
     createdAt:string;
+    deadlinesCount:number;
 }
 
 export const useGetProjectDetails=(accountId:number)=>{

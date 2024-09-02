@@ -38,7 +38,7 @@ export default function ProjectCard({ projects }: ProjectCardInterFace) {
                 });
 
                 return (
-                    <section className="flex px-4 py-4 justify-between drop-shadow-md rounded-lg w-[400px] h-[140px] bg-white" key={index}>
+                    <section className="flex px-4 py-4 justify-between drop-shadow-md rounded-lg w-[400px] h-[180px] bg-white" key={index}>
                         <section className="flex flex-col gap-4 max-w-[300px]">
                             <h1 className="text-base font-semibold truncate whitespace-nowrap overflow-hidden text-ellipsis">
                                 {project.name}
@@ -48,6 +48,11 @@ export default function ProjectCard({ projects }: ProjectCardInterFace) {
                                     {project.description}
                                 </span>
                             </p>
+                            <span className="flex gap-1 text-xs items-center">
+                                <span className="text-accentSecondary px-2 py-1 bg-accentSecondary/10 rounded-md">
+                                    Tasks : {project.deadlinesCount}
+                                </span>
+                            </span>
                             <span className="flex gap-1 text-xs items-center bottom-2 absolute">
                                 <span className="text-secondary px-2 py-1 bg-secondary/20 rounded-md">
                                     Created At : {formattedDate}
