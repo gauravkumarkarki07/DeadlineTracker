@@ -24,7 +24,7 @@ function Projects() {
       </section>
       <section className="w-full flex flex-col gap-4">
         <h2 className="text-base font-semibold">Project Details</h2>
-        <section className="flex gap-12 flex-wrap">
+        <section className="flex gap-8 flex-wrap">
           <ProjectCard projects={projectObject.projects} />
         </section>
       </section>

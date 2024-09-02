@@ -10,7 +10,7 @@ function ProjectCardActionButtonDropdown({onEdit,onDelete}:ProjectCardActionButt
     return (
         <DropdownMenu>
             <DropdownMenuTrigger>
-                <Ellipsis />
+                <Ellipsis className="text-gray-500 hover:text-primary"/>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
                 <DropdownMenuItem onSelect={onEdit}>

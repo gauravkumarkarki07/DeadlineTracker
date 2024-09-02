@@ -9,7 +9,7 @@ function Index() {
       </section>
       <section className="w-full">
         {/* <Header/> */}
-        <section className="bg-gray-100 py-4 px-4 h-full">
+        <section className="bg-tertiary/5 py-4 px-4 h-full">
           <Outlet/>
         </section>
       </section>
