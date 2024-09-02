@@ -45,6 +45,8 @@ export const useCreateProject=()=>{
                 variant:'success'
             })
             queryClient.invalidateQueries({queryKey:['projectDetails']})
+            queryClient.invalidateQueries({queryKey:['upcommingDeadlines']})
+
         },
         onError:(error)=>{
             toast({
@@ -69,6 +71,8 @@ export const useUpdateProject=()=>{
                 variant:'success'
             })
             queryClient.invalidateQueries({queryKey:['projectDetails']})
+            queryClient.invalidateQueries({queryKey:['upcommingDeadlines']})
+
         },
         onError:(error)=>{
             toast({
@@ -93,6 +97,7 @@ export const useDeleteProject=()=>{
                 variant:'success'
             })
             queryClient.invalidateQueries({queryKey:['projectDetails']})
+            queryClient.invalidateQueries({queryKey:['upcommingDeadlines']})
         },
         onError:(error)=>{
             toast({

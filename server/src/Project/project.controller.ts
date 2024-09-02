@@ -15,6 +15,11 @@ import { CreateProjectRequestDto } from './dto/project.request.dto';
 export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
 
+  @Get(':accountId/upcommingdeadlines')
+  async getUpCommingDeadlines(@Param('accountId') accountId: number) {
+    return this.projectService.getUpcommingDeadline(accountId);
+  }
+
   @Get(':accountId')
   async getAllProjects(
     @Param('accountId') accountId: number,

@@ -49,4 +49,10 @@ const TaskEndpoints={
   }
 }
 
-export {ProjectEndpoints,AuthEndpoints,TaskEndpoints}
+const DashboardEndpoints={
+  getUpcommingDeadlines:(accountId:number)=>{
+    return `projects/${accountId}/upcommingdeadlines`
+  }
+}
+
+export {ProjectEndpoints,AuthEndpoints,TaskEndpoints,DashboardEndpoints}

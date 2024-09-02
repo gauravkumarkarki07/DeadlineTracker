@@ -11,6 +11,7 @@ import {
   CreateProjectResponseDto,
   GetAllProjectResponseDto,
   GetProjectResponseDto,
+  UpcommingDeadlineResponseDto,
 } from './dto/project.response.dto';
 import { DtoMapper } from 'src/Utils/dtoMapper';
 
@@ -161,6 +162,40 @@ export class ProjectService {
       });
 
       return true;
+    } catch (error) {
+      throw new InternalServerErrorException('Server Error');
+    }
+  }
+
+  //Get Upcomming Project Deadlines
+  async getUpcommingDeadline(accountId: number) {
+    const account = Number(accountId);
+    try {
+      const upcommingDeadlines = await this.databaseService.project.findMany({
+        where: {
+          accountId: account,
+        },
+        include: {
+          deadlines: true,
+        },
+      });
+
+      const response: UpcommingDeadlineResponseDto[] = upcommingDeadlines
+        .flatMap((project) => project.deadlines)
+        .filter((deadline) => new Date(deadline.dueDate) > new Date())
+        .map((deadline) =>
+          DtoMapper.toDto(
+            {
+              ...deadline,
+              projectName:
+                upcommingDeadlines.find((p) => p.id === deadline.projectId)
+                  ?.name || 'Unknown Project',
+            },
+            UpcommingDeadlineResponseDto,
+          ),
+        );
+
+      return response;
     } catch (error) {
       throw new InternalServerErrorException('Server Error');
     }

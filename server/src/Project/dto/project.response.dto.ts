@@ -21,3 +21,22 @@ export class GetAllProjectResponseDto {
   @Expose()
   projects: GetProjectResponseDto[] = [];
 }
+
+export class UpcommingDeadlineResponseDto {
+  @Expose()
+  id: number;
+  @Expose()
+  title: string;
+  @Expose()
+  projectId: number;
+  @Expose()
+  projectName: string;
+  @Expose()
+  status: string;
+  @Expose()
+  dueDate: Date;
+}
+export class GetUpcommingDeadlineResponseDto {
+  @Expose()
+  upCommingDeadlines: UpcommingDeadlineResponseDto[] = [];
+}

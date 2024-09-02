@@ -44,6 +44,7 @@ export const useCreateTask=()=>{
         onSuccess:()=>{
             queryClient.invalidateQueries({queryKey:['tasks']})
             queryClient.invalidateQueries({queryKey:['taskById']})
+            queryClient.invalidateQueries({queryKey:['upcommingDeadlines']})
             toast({
                 description:'Task Created Successfully',
                 variant:'success'
@@ -69,6 +70,7 @@ export const useUpdateTask=()=>{
         onSuccess:()=>{
             queryClient.invalidateQueries({queryKey:['tasks']})
             queryClient.invalidateQueries({queryKey:['taskById']})
+            queryClient.invalidateQueries({queryKey:['upcommingDeadlines']})
             toast({
                 description:'Task Updated Successfully',
                 variant:'success'
@@ -94,6 +96,7 @@ export const useDeleteTask=()=>{
         onSuccess:()=>{
             queryClient.invalidateQueries({queryKey:['tasks']})
             queryClient.invalidateQueries({queryKey:['taskById']})
+            queryClient.invalidateQueries({queryKey:['upcommingDeadlines']})
             toast({
                 description:'Task Deleted Successfully',
                 variant:'success'
