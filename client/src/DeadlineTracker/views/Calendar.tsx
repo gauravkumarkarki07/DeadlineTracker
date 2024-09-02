@@ -1,7 +1,9 @@
 
 function Calendar() {
   return (
-    <div>Calendar</div>
+    <div>
+      Feature Comming Soon...
+    </div>
   )
 }
 

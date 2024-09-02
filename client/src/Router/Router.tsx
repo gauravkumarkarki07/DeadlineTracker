@@ -10,6 +10,7 @@ import Calendar from "@/DeadlineTracker/views/Calendar";
 import ProtectedRoute from "@/DeadlineTracker/components/ProtectedRoute";
 import NotFound from "@/DeadlineTracker/views/NotFound";
 import ProjectEditPage from "@/DeadlineTracker/components/ProjectEditPage";
+import ErrorComponent from "@/DeadlineTracker/components/ErrorComponent";
 
 const router = createBrowserRouter([
     {
@@ -69,6 +70,7 @@ const router = createBrowserRouter([
                 element:<NotFound/>
             }
         ],
+        errorElement:<ErrorComponent/>
     }
 ])
 
