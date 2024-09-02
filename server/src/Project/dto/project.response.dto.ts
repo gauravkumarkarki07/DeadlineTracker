@@ -16,7 +16,10 @@ export class GetProjectResponseDto {
   accountId: number;
   @Expose()
   createdAt: Date;
+  @Expose()
+  deadlinesCount: number;
 }
+
 export class GetAllProjectResponseDto {
   @Expose()
   projects: GetProjectResponseDto[] = [];

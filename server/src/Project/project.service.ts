@@ -78,10 +78,24 @@ export class ProjectService {
         where: {
           accountId: account,
         },
+        include: {
+          _count: {
+            select: {
+              deadlines: true,
+            },
+          },
+        },
       });
-      const responseArray = allProjects.map((projects) =>
-        DtoMapper.toDto(projects, GetProjectResponseDto),
-      );
+      const responseArray = allProjects.map((project) => {
+        const dto = new GetProjectResponseDto();
+        dto.id = project.id;
+        dto.name = project.name;
+        dto.description = project.description;
+        dto.accountId = project.accountId;
+        dto.createdAt = project.createdAt;
+        dto.deadlinesCount = project._count.deadlines;
+        return dto;
+      });
       const response = new GetAllProjectResponseDto();
       response.projects = responseArray;
 
